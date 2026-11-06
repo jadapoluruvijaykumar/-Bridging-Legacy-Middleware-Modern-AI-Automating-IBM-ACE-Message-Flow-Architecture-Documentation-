@@ -1,0 +1,19 @@
+-- Copyright (c) 2022 Open Technologies for Integration
+-- Licensed under the MIT license (see LICENSE for details)
+
+CREATE FUNCTION javaLangSystemGetenv( IN name CHARACTER )
+	RETURNS CHARACTER
+	LANGUAGE JAVA
+	EXTERNAL NAME "java.lang.System.getenv";
+	
+CREATE COMPUTE MODULE TimerFlow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE pathValue CHARACTER;
+        SET pathValue = javaLangSystemGetenv('PATH');
+        
+		LOG EVENT SEVERITY 1 CATALOG 'BIPmsgs' MESSAGE 8099 VALUES('Read env var', 'PATH', pathValue);
+		
+		RETURN TRUE;
+	END;
+END MODULE;

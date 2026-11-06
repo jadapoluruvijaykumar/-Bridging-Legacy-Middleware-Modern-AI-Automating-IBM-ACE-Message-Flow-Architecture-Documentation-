@@ -1,0 +1,21 @@
+-- Copyright (c) 2022 Open Technologies for Integration
+-- Licensed under the MIT license (see LICENSE for details)
+
+/*
+ * Requires server.conf.yaml settings of the form
+ *
+ * UserVariables:
+ *   envVarUserVariable: '${PATH}'
+ * resolveUserVariableEnvVars: true
+ */
+DECLARE envVarUserVariable EXTERNAL CHARACTER;
+
+CREATE COMPUTE MODULE TimerFlow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+        
+		LOG EVENT SEVERITY 1 CATALOG 'BIPmsgs' MESSAGE 8099 VALUES('Read env var', 'from server.conf.yaml', envVarUserVariable);
+		
+		RETURN TRUE;
+	END;
+END MODULE;

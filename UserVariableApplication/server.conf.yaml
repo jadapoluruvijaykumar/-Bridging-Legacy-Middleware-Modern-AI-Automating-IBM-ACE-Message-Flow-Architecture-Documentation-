@@ -1,0 +1,4 @@
+---
+UserVariables:
+  envVarUserVariable: '${PATH}'
+resolveUserVariableEnvVars: true
